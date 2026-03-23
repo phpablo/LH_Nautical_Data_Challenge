@@ -10,7 +10,7 @@ caminho_produtos = os.path.join(diretorio_atual, '../data_source/produtos_raw.cs
 df_vendas = pd.read_csv(caminho_vendas)
 df_produtos = pd.read_csv(caminho_produtos)
 
-# Limpeza com as colunas reais
+# Limpeza
 def limpar_categoria(cat):
     if pd.isna(cat): return cat
     cat_limpa = str(cat).lower().strip()

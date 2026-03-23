@@ -32,7 +32,6 @@ if 'categoria' in df_produtos.columns:
     df_produtos['categoria'] = df_produtos['categoria'].apply(limpar_categoria)
 
 # Convertendo valores para numérico
-# Descobrindo o nome da coluna de preço (pode ser 'preco' ou 'valor')
 col_preco = 'price'
 
 if col_preco:

@@ -12,7 +12,6 @@ df_vendas = pd.read_csv(caminho_vendas)
 df_vendas['sale_date'] = pd.to_datetime(df_vendas['sale_date'], dayfirst=True, errors='coerce')
 
 print("2. Agrupando as vendas brutas por dia...")
-# Aqui nós calculamos o total de vendas de cada dia que REALMENTE teve venda
 vendas_por_dia = df_vendas.groupby('sale_date')['total'].sum().reset_index()
 
 print("3. Criando a Máquina do Tempo (Calendário Completo)...")

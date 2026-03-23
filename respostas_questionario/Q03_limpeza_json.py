@@ -2,9 +2,7 @@ import pandas as pd
 import json
 import os
 
-# Blindagem de diretório
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-# Note que estamos voltando uma pasta para entrar em data_source
 caminho_arquivo = os.path.join(diretorio_atual, '../data_source/custos_importacao.json')
 
 try:
@@ -12,10 +10,9 @@ try:
         dados = json.load(f)
     print("1. SUCESSO! JSON carregado.")
     
-    # 2. Investigação e Achatamento (Flatten)
+    # Investigação
     registros_limpos = []
     
-    # Procurando onde está a lista aninhada (ex: 'historico_precos', 'custos', etc)
     primeiro_item = dados[0]
     chave_lista = next((k for k, v in primeiro_item.items() if isinstance(v, list)), None)
     
@@ -43,7 +40,7 @@ try:
     print(f"\n--- RESULTADO PARA A QUESTÃO 3.2 ---")
     print(f"Quantas entradas de importação o CSV recebeu ao todo? {len(df_final)}\n")
     
-    # Criando o CSV para finalizar a tarefa
+    # Criando o CSV 
     caminho_csv = os.path.join(diretorio_atual, 'custos_importacao_normalizado.csv')
     df_final.to_csv(caminho_csv, index=False)
     print(f"Tabela salva com sucesso em: {caminho_csv}")

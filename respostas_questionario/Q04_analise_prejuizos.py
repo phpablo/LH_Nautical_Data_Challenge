@@ -26,10 +26,10 @@ caminho_custos = os.path.join(diretorio_atual, 'custos_importacao_normalizado.cs
 df_vendas = pd.read_csv(caminho_vendas)
 df_custos = pd.read_csv(caminho_custos)
 
-# Tratando a data usando o nome de coluna exato que você me passou
 df_vendas['sale_date'] = pd.to_datetime(df_vendas['sale_date'], dayfirst=True, errors='coerce')
 
 print("3. Cruzando Vendas, Dólar e Custos...")
+
 # Junta Vendas com Dólar do dia
 df_vendas = pd.merge(df_vendas, df_dolar, left_on='sale_date', right_on='data_cotacao', how='left')
 
@@ -42,6 +42,7 @@ df_custos_unicos = df_custos.drop_duplicates(subset=[col_id_custos], keep='last'
 df_vendas = pd.merge(df_vendas, df_custos_unicos[[col_id_custos, col_usd_custos]], left_on='id_product', right_on=col_id_custos, how='left')
 
 print("4. Executando as Regras de Negócio de Prejuízo...")
+
 # Custo Transação BRL = (Custo Unitário USD * Quantidade Vendida) * Cotação do Dia
 df_vendas['custo_total_brl'] = df_vendas[col_usd_custos] * df_vendas['qtd'] * df_vendas['cotacaoVenda']
 

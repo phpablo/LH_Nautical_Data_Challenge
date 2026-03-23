@@ -23,20 +23,14 @@ df_motor = df_vendas[df_vendas['id_product'] == id_motor]
 vendas_diarias = df_motor.groupby('sale_date')['qtd'].sum().reset_index()
 
 print("3. Criando o Calendário de Treino (Até 31/12/2023)...")
-# Garantindo que temos a linha do tempo perfeita sem pular dias para a Média Móvel funcionar
 calendario_treino = pd.date_range(start=vendas_diarias['sale_date'].min(), end='2023-12-31')
 df_treino = pd.DataFrame({'sale_date': calendario_treino})
 df_treino = pd.merge(df_treino, vendas_diarias, on='sale_date', how='left').fillna(0)
 
 print("4. Construindo a Previsão Baseline (Média Móvel de 7 dias)...")
 # A previsão de amanhã é a média dos últimos 7 dias. 
-# Para evitar Data Leakage (vazamento), usamos o 'shift(1)' para garantir 
-# que o dia de hoje não entre na conta da previsão de hoje.
 df_treino['previsao_baseline'] = df_treino['qtd'].rolling(window=7).mean().shift(1)
 
-# Pulo do Gato para o período de TESTE (Janeiro de 2024):
-# Como não podemos usar as vendas reais de Janeiro para prever Janeiro,
-# A previsão da primeira semana de Janeiro será uma linha reta da última média móvel disponível em 31/12!
 ultima_media_conhecida = df_treino.iloc[-1]['previsao_baseline']
 
 # Criando os 7 primeiros dias de Janeiro
